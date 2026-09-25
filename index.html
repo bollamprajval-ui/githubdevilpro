@@ -1,912 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Pulse - Your Student Survival Hub</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo i {
-            margin-right: 10px;
-        }
-
-        nav {
-            display: flex;
-            gap: 30px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: #FF6B6B;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .menu-toggle {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-            padding: 120px 0 80px;
-            text-align: center;
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: #333;
-        }
-
-        /* Sections */
-        .section {
-            background: white;
-            margin: 40px 0;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-align: center;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section h2 i {
-            margin-right: 10px;
-        }
-
-        /* Cards */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .card-image {
-            height: 200px;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-        }
-
-        .card-content {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .card-description {
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-            color: #999;
-        }
-
-        .rating {
-            color: #FFD700;
-        }
-
-        /* Marketplace */
-        .marketplace-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .market-item {
-            background: white;
-            border: 2px solid #f0f0f0;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .market-item:hover {
-            border-color: #FF6B6B;
-            transform: translateY(-2px);
-        }
-
-        .market-image {
-            height: 150px;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .market-content {
-            padding: 15px;
-        }
-
-        .market-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .market-price {
-            color: #FF6B6B;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        /* Updates Section */
-        .updates-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .update-item {
-            background: #f8f9fa;
-            border-left: 4px solid #FF6B6B;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 0 10px 10px 0;
-            transition: all 0.3s;
-        }
-
-        .update-item:hover {
-            background: #fff;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .update-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .update-meta {
-            font-size: 0.9rem;
-            color: #999;
-            margin-bottom: 10px;
-        }
-
-        .update-description {
-            color: #666;
-            line-height: 1.5;
-        }
-
-        /* Footer */
-        footer {
-            background: #333;
-            color: white;
-            padding: 40px 0 20px;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 15px;
-            color: #FF6B6B;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-            line-height: 1.6;
-        }
-
-        .footer-section a:hover {
-            color: #FF6B6B;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .social-links a {
-            font-size: 24px;
-            color: #ccc;
-            transition: color 0.3s;
-        }
-
-        .social-links a:hover {
-            color: #FF6B6B;
-        }
-
-        .copyright {
-            border-top: 1px solid #555;
-            padding-top: 20px;
-            color: #999;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            nav {
-                display: none;
-                flex-direction: column;
-                gap: 15px;
-                width: 100%;
-                text-align: center;
-            }
-
-            nav.active {
-                display: flex;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .section {
-                padding: 20px;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .marketplace-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Campus Pulse — Delhi Student Directory</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F5F1; --paper:#FFFFFF; --ink:#161A22; --ink-soft:#5B6270;
+  --line:#DEDFD9; --marigold:#D98E2B; --marigold-deep:#B5721A;
+  --teal:#2F5D53; --radius:2px;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171C; --paper:#1C1F26; --ink:#ECEDE8; --ink-soft:#9BA0AC;
+    --line:#31353F; --marigold:#E3A046; --marigold-deep:#F0B45E; --teal:#5C9C8C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171C; --paper:#1C1F26; --ink:#ECEDE8; --ink-soft:#9BA0AC;
+  --line:#31353F; --marigold:#E3A046; --marigold-deep:#F0B45E; --teal:#5C9C8C;
+}
+html{scroll-behavior:smooth;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.1;}
+a{color:inherit;}
+button{font-family:inherit;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* header */
+header{position:fixed;top:0;width:100%;z-index:100;background:color-mix(in srgb, var(--paper) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);}
+.header-row{display:flex;align-items:center;justify-content:space-between;height:64px;}
+.logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.logo .dot{width:8px;height:8px;background:var(--marigold);border-radius:50%;display:inline-block;}
+nav{display:flex;gap:28px;}
+nav a{font-size:0.94rem;text-decoration:none;color:var(--ink-soft);border-bottom:2px solid transparent;padding-bottom:3px;transition:color .15s,border-color .15s;}
+nav a:hover,nav a.active{color:var(--ink);border-color:var(--marigold);}
+.menu-toggle{display:none;background:none;border:none;font-size:1.3rem;color:var(--ink);cursor:pointer;}
+main{padding-top:64px;min-height:70vh;}
+
+/* hero (home) */
+.hero{padding:86px 0 64px;border-bottom:1px solid var(--line);}
+.hero-kicker{color:var(--teal);font-weight:600;font-size:0.92rem;margin-bottom:14px;}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);max-width:14ch;margin-bottom:18px;}
+.hero p{max-width:52ch;color:var(--ink-soft);font-size:1.08rem;margin-bottom:32px;}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;margin-bottom:34px;}
+.stat b{font-family:'Fraunces',serif;font-size:1.8rem;display:block;color:var(--marigold-deep);}
+.stat span{font-size:0.85rem;color:var(--ink-soft);}
+.hero-buttons{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{padding:12px 22px;border-radius:var(--radius);font-size:0.95rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;border:1px solid transparent;transition:transform .12s ease;}
+.btn:active{transform:scale(.98);}
+.btn-primary{background:var(--ink);color:var(--paper);}
+.btn-primary:hover{background:var(--marigold-deep);}
+.btn-outline{border-color:var(--line);color:var(--ink);}
+.btn-outline:hover{border-color:var(--ink);}
+
+/* site map tiles (home) */
+.section{padding:56px 0;border-bottom:1px solid var(--line);}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:30px;flex-wrap:wrap;}
+.section-head h2{font-size:1.8rem;}
+.section-note{color:var(--ink-soft);font-size:0.92rem;}
+.tile-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+.tile{background:var(--paper);padding:26px;text-decoration:none;color:var(--ink);display:block;transition:background .15s;}
+.tile:hover{background:color-mix(in srgb, var(--marigold) 6%, var(--paper));}
+.tile i{color:var(--marigold);font-size:1.3rem;margin-bottom:14px;display:block;}
+.tile h3{font-size:1.2rem;margin-bottom:6px;}
+.tile p{color:var(--ink-soft);font-size:0.9rem;margin-bottom:10px;}
+.tile .count{font-size:0.8rem;color:var(--teal);font-weight:600;}
+
+/* category page header */
+.page-header{padding:110px 0 40px;border-bottom:1px solid var(--line);}
+.breadcrumb{font-size:0.85rem;color:var(--ink-soft);margin-bottom:14px;}
+.breadcrumb a{color:var(--teal);text-decoration:none;}
+.breadcrumb a:hover{text-decoration:underline;}
+.page-header h1{font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:10px;}
+.page-header p{color:var(--ink-soft);max-width:60ch;font-size:1.02rem;}
+.page-body{padding:48px 0 64px;}
+
+/* listing grid & cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+.card{background:var(--paper);padding:22px;cursor:pointer;transition:background .15s;display:flex;flex-direction:column;gap:10px;}
+.card:hover{background:color-mix(in srgb, var(--marigold) 6%, var(--paper));}
+.card-top{display:flex;align-items:center;justify-content:space-between;}
+.card-emoji{font-size:1.7rem;}
+.card-rating{font-size:0.82rem;color:var(--ink-soft);}
+.card-title{font-family:'Fraunces',serif;font-weight:500;font-size:1.15rem;}
+.card-desc{color:var(--ink-soft);font-size:0.92rem;flex-grow:1;}
+.card-foot{display:flex;justify-content:space-between;align-items:center;font-size:0.92rem;padding-top:6px;border-top:1px solid var(--line);}
+.price{font-weight:600;color:var(--marigold-deep);}
+
+/* jobs list */
+.job-list{display:flex;flex-direction:column;border-top:1px solid var(--line);}
+.job-item{display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);cursor:pointer;align-items:baseline;flex-wrap:wrap;}
+.job-item:hover .job-title{color:var(--marigold-deep);}
+.job-time{flex:0 0 118px;color:var(--ink-soft);font-size:0.82rem;}
+.job-main{flex:1;min-width:240px;}
+.job-title{font-family:'Fraunces',serif;font-size:1.08rem;font-weight:500;transition:color .15s;}
+.job-tags{font-size:0.85rem;color:var(--ink-soft);margin:4px 0 6px;}
+.job-desc{font-size:0.92rem;color:var(--ink-soft);}
+.job-pay{flex:0 0 auto;font-weight:600;color:var(--teal);font-size:0.95rem;}
+
+/* footer */
+footer{background:var(--ink);color:var(--bg);padding:52px 0 26px;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:36px;}
+footer h3{font-family:'Fraunces',serif;font-weight:500;margin-bottom:12px;color:var(--marigold);font-size:1.05rem;}
+footer p,footer a{color:#C7C9C2;text-decoration:none;font-size:0.92rem;line-height:1.8;display:block;}
+footer a:hover{color:var(--marigold);}
+.social{display:flex;gap:16px;margin-top:6px;}
+.social a{font-size:1.1rem;display:inline;}
+.copyright{border-top:1px solid #333;padding-top:18px;font-size:0.85rem;color:#8B8D86;}
+
+/* modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,10,12,.55);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--paper);max-width:440px;width:100%;padding:30px;border-top:3px solid var(--marigold);}
+.modal h3{font-size:1.3rem;margin-bottom:12px;}
+.modal p{color:var(--ink-soft);font-size:0.95rem;}
+.modal-close{margin-top:22px;background:var(--ink);color:var(--paper);border:none;padding:10px 18px;font-weight:600;cursor:pointer;font-size:0.9rem;}
+
+@media (max-width:760px){
+  nav{position:fixed;top:64px;left:0;right:0;background:var(--paper);flex-direction:column;gap:0;border-bottom:1px solid var(--line);display:none;padding-bottom:env(safe-area-inset-bottom,0px);}
+  nav.active-menu{display:flex;}
+  nav a{padding:14px 24px;border-bottom:1px solid var(--line);width:100%;}
+  .menu-toggle{display:block;}
+  .hero,.page-header{padding-top:96px;}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:26px;}
+}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-graduation-cap"></i> Campus Pulse
-                </div>
-                <nav id="nav-menu">
-                    <a href="#food">Food</a>
-                    <a href="#accommodation">Stay</a>
-                    <a href="#jobs">Jobs</a>
-                    <a href="#marketplace">Market</a>
-                    <a href="#study">Study</a>
-                </nav>
-                <div class="menu-toggle" onclick="toggleMenu()">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </div>
+
+<header>
+  <div class="wrap header-row">
+    <div class="logo" data-link="home"><span class="dot"></span>Campus Pulse</div>
+    <nav id="nav-menu">
+      <a href="#home" data-link="home">Home</a>
+      <a href="#food" data-link="food">Food</a>
+      <a href="#stay" data-link="stay">Stay</a>
+      <a href="#study" data-link="study">Study</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- HOME -->
+  <section class="page" id="page-home">
+    <div class="hero">
+      <div class="wrap">
+        <div class="hero-kicker">Delhi NCR · updated daily</div>
+        <h1>Everything you need to survive campus, in one directory.</h1>
+        <p>Verified food spots, PGs, internships, second-hand gear and exam material — sourced and reviewed by students who've actually used them.</p>
+        <div class="hero-stats">
+          <div class="stat"><b>180+</b><span>listings verified this month</span></div>
+          <div class="stat"><b>5</b><span>directories to explore</span></div>
+          <div class="stat"><b>24h</b><span>average internship response</span></div>
         </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Welcome to Campus Pulse</h1>
-            <p>Your ultimate hyperlocal student survival hub - food, stay, jobs, marketplace & study resources all in one place!</p>
-            <div class="hero-buttons">
-                <a href="#food" class="btn btn-primary">Explore Now</a>
-                <button class="btn btn-secondary" onclick="alert('Join our community!')">Join Community</button>
-            </div>
+        <div class="hero-buttons">
+          <a href="#food" class="btn btn-primary" data-link="food">Browse listings</a>
+          <a href="#jobs" class="btn btn-outline" data-link="jobs">See today's internships</a>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Food Section -->
-    <section class="section" id="food">
-        <div class="container">
-            <h2><i class="fas fa-utensils"></i> Cheap Food Spots</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="showDetails('food', 0)">
-                    <div class="card-image">🍛</div>
-                    <div class="card-content">
-                        <div class="card-title">Anand Bhavan</div>
-                        <div class="card-description">Authentic South Indian meals. Famous for dosa and idli. Student combo available.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐☆ (4.3)</span>
-                            <span>₹60-120</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('food', 1)">
-                    <div class="card-image">🍕</div>
-                    <div class="card-content">
-                        <div class="card-title">Domino's Pizza</div>
-                        <div class="card-description">International pizza chain with student discounts. Free delivery on orders above ₹300.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐⭐ (4.6)</span>
-                            <span>₹150-400</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('food', 2)">
-                    <div class="card-image">🍜</div>
-                    <div class="card-content">
-                        <div class="card-title">Wok Express</div>
-                    class="card-description">Chinese and Thai cuisine. Quick meals perfect for study breaks. 20% student discount.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐☆ (4.4)</span>
-                            <span>₹80-180</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('food', 3)">
-                    <div class="card-image">🥪</div>
-                    <div class="card-content">
-                        <div class="card-title">Subway</div>
-                    class="card-description">Custom sandwiches and salads. Fresh ingredients, healthy options available.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐☆ (4.2)</span>
-                            <span>₹120-250</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('food', 4)">
-                    <div class="card-image">☕</div>
-                    <div class="card-content">
-                        <div class="card-title">CCD (Cafe Coffee Day)</div>
-                    class="card-description">Coffee, snacks, and study-friendly atmosphere. Free WiFi, perfect for group study.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐☆ (4.1)</span>
-                            <span>₹100-200</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('food', 5)">
-                    <div class="card-image">🍚</div>
-                    <div class="card-content">
-                        <div class="card-title">Biryani House</div>
-                    class="card-description">Authentic biryani and kebabs. Weekend specials with extra portions.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐⭐ (4.7)</span>
-                            <span>₹90-160</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="section" style="border-bottom:none;">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Explore the directory</h2>
+          <span class="section-note">Five pages, one campus</span>
         </div>
-    </section>
-
-    <!-- Accommodation Section -->
-    <section class="section" id="accommodation">
-        <div class="container">
-            <h2><i class="fas fa-home"></i> PG & Hostel Reviews</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="showDetails('accommodation', 0)">
-                    <div class="card-image">🏠</div>
-                    <div class="card-content">
-                        <div class="card-title">Oyo Premium PG</div>
-                        <div class="card-description">Modern PG with AC rooms, gym, and study areas. Near IIT Delhi, 5 min walk to metro.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐⭐ (4.8)</span>
-                            <span>₹8,500/month</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('accommodation', 1)">
-                    <div class="card-image">🏢</div>
-                    <div class="card-content">
-                        <div class="card-title">Zolo Stay Nehru Place</div>
-                        <div class="card-description">Fully furnished apartments with kitchen. Perfect for working professionals. Metro connectivity.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐☆ (4.5)</span>
-                            <span>₹12,000/month</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('accommodation', 2)">
-                    <div class="card-image">🏘️</div>
-                    <div class="card-content">
-                        <div class="card-title">Student Nest PG</div>
-                        <div class="card-description">Budget-friendly PG for students. Mess included, WiFi, laundry. Near DU colleges.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐☆☆ (3.9)</span>
-                            <span>₹6,500/month</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('accommodation', 3)">
-                    <div class="card-image">🏨</div>
-                    <div class="card-content">
-                        <div class="card-title">Hostel YWCA</div>
-                        <div class="card-description">Girls hostel with strict discipline. Clean facilities, mess, study rooms. Near Connaught Place.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐☆ (4.3)</span>
-                            <span>₹7,200/month</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('accommodation', 4)">
-                    <div class="card-image">🏠</div>
-                    <div class="card-content">
-                        <div class="card-title">CoLiving Spaces</div>
-                        <div class="card-description">Modern coliving with shared kitchen, workspaces. Perfect for interns. Near tech parks.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐⭐ (4.6)</span>
-                            <span>₹15,000/month</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('accommodation', 5)">
-                    <div class="card-image">🏢</div>
-                    <div class="card-content">
-                        <div class="card-title">Budget PG Karol Bagh</div>
-                        <div class="card-description">Affordable accommodation for students. Basic amenities, shared bathrooms. Near markets.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐☆☆ (3.7)</span>
-                            <span>₹5,800/month</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="tile-grid">
+          <a class="tile" href="#food" data-link="food"><i class="fas fa-utensils"></i><h3>Food</h3><p>Cheap eats, cafes and delivery spots near you.</p><span class="count">6 listings</span></a>
+          <a class="tile" href="#stay" data-link="stay"><i class="fas fa-house"></i><h3>Stay</h3><p>PG and hostel reviews with real pricing.</p><span class="count">6 listings</span></a>
+          <a class="tile" href="#jobs" data-link="jobs"><i class="fas fa-briefcase"></i><h3>Internships</h3><p>Fresh openings posted by hiring teams.</p><span class="count">6 openings</span></a>
+          <a class="tile" href="#marketplace" data-link="marketplace"><i class="fas fa-tag"></i><h3>Marketplace</h3><p>Buy and sell gear, books and electronics.</p><span class="count">8 listings</span></a>
+          <a class="tile" href="#study" data-link="study"><i class="fas fa-book"></i><h3>Study</h3><p>Exam prep material curated by toppers.</p><span class="count">6 resources</span></a>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Jobs Section -->
-    <section class="section" id="jobs">
-        <div class="container">
-            <h2><i class="fas fa-briefcase"></i> Internship Alerts</h2>
-            <div class="updates-list">
-                <div class="update-item" onclick="showDetails('job', 0)">
-                    <div class="update-title">Frontend Developer Intern - Microsoft</div>
-                    <div class="update-meta">Posted 2 hours ago • ₹45,000/month • Hybrid</div>
-                    <div class="update-description">Work on React and TypeScript projects. Build user interfaces for Microsoft Teams. 6-month internship with PPO opportunity.</div>
-                </div>
-                <div class="update-item" onclick="showDetails('job', 1)">
-                    <div class="update-title">Data Science Intern - Google</div>
-                    <div class="update-meta">Posted 4 hours ago • ₹50,000/month • Remote</div>
-                    <div class="update-description">Analyze large datasets using Python and TensorFlow. Work on AI/ML projects. Research experience preferred.</div>
-                </div>
-                <div class="update-item" onclick="showDetails('job', 2)">
-                    <div class="update-title">Product Management Intern - Flipkart</div>
-                    <div class="update-meta">Posted 6 hours ago • ₹35,000/month • On-site</div>
-                    <div class="update-description">Assist in product strategy and user research. Work with cross-functional teams. MBA or engineering background preferred.</div>
-                </div>
-                <div class="update-item" onclick="showDetails('job', 3)">
-                    <div class="update-title">UI/UX Design Intern - Adobe</div>
-                    <div class="update-meta">Posted 8 hours ago • ₹40,000/month • Hybrid</div>
-                    <div class="update-description">Design interfaces for Creative Cloud apps using Figma. User research and prototyping. Portfolio required.</div>
-                </div>
-                <div class="update-item" onclick="showDetails('job', 4)">
-                    <div class="update-title">DevOps Engineer Intern - Amazon</div>
-                    <div class="update-meta">Posted 12 hours ago • ₹42,000/month • Remote</div>
-                    <div class="update-description">Work with AWS services and CI/CD pipelines. Automate deployment processes. Cloud computing knowledge required.</div>
-                </div>
-                <div class="update-item" onclick="showDetails('job', 5)">
-                    <div class="update-title">Marketing Intern - Ola</div>
-                    <div class="update-meta">Posted 1 day ago • ₹25,000/month • On-site</div>
-                    <div class="update-description">Social media marketing and content creation. Digital campaigns for ride-hailing services. Communication skills essential.</div>
-                </div>
-            </div>
+  <!-- FOOD -->
+  <section class="page" id="page-food">
+    <div class="page-header">
+      <div class="wrap">
+        <div class="breadcrumb"><a href="#home" data-link="home">Home</a> / Food</div>
+        <h1>Cheap food spots</h1>
+        <p>Meals within student budgets, sorted by rating. Tap a listing for hours, combos and directions.</p>
+      </div>
+    </div>
+    <div class="page-body"><div class="wrap"><div class="grid" id="food-grid"></div></div></div>
+  </section>
+
+  <!-- STAY -->
+  <section class="page" id="page-stay">
+    <div class="page-header">
+      <div class="wrap">
+        <div class="breadcrumb"><a href="#home" data-link="home">Home</a> / Stay</div>
+        <h1>PG &amp; hostel reviews</h1>
+        <p>Price is per month, per bed. Every listing has been reviewed by a current or past resident.</p>
+      </div>
+    </div>
+    <div class="page-body"><div class="wrap"><div class="grid" id="stay-grid"></div></div></div>
+  </section>
+
+  <!-- JOBS -->
+  <section class="page" id="page-jobs">
+    <div class="page-header">
+      <div class="wrap">
+        <div class="breadcrumb"><a href="#home" data-link="home">Home</a> / Internships</div>
+        <h1>Internship alerts</h1>
+        <p>Newest postings first. Pay shown is the monthly stipend as listed by the employer.</p>
+      </div>
+    </div>
+    <div class="page-body"><div class="wrap"><div class="job-list" id="job-list"></div></div></div>
+  </section>
+
+  <!-- MARKETPLACE -->
+  <section class="page" id="page-marketplace">
+    <div class="page-header">
+      <div class="wrap">
+        <div class="breadcrumb"><a href="#home" data-link="home">Home</a> / Marketplace</div>
+        <h1>Second-hand marketplace</h1>
+        <p>Buy and sell within campus. Message the seller directly to arrange a meet-up.</p>
+      </div>
+    </div>
+    <div class="page-body"><div class="wrap"><div class="grid" id="market-grid"></div></div></div>
+  </section>
+
+  <!-- STUDY -->
+  <section class="page" id="page-study">
+    <div class="page-header">
+      <div class="wrap">
+        <div class="breadcrumb"><a href="#home" data-link="home">Home</a> / Study</div>
+        <h1>Study resources</h1>
+        <p>Exam prep material curated and rated by students who've cleared these exams.</p>
+      </div>
+    </div>
+    <div class="page-body"><div class="wrap"><div class="grid" id="study-grid"></div></div></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h3>Campus Pulse</h3>
+        <p>A hyperlocal directory built by students, for students — food, stay, jobs, gear and study help in one place.</p>
+      </div>
+      <div>
+        <h3>Sitemap</h3>
+        <a href="#home" data-link="home">Home</a>
+        <a href="#food" data-link="food">Food</a>
+        <a href="#stay" data-link="stay">Stay</a>
+      </div>
+      <div>
+        <h3>&nbsp;</h3>
+        <a href="#jobs" data-link="jobs">Internships</a>
+        <a href="#marketplace" data-link="marketplace">Marketplace</a>
+        <a href="#study" data-link="study">Study</a>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <a href="mailto:info@campuspulse.com">info@campuspulse.com</a>
+        <a href="tel:+1234567890">+1 (234) 567-890</a>
+        <p>Mon–Fri, 9am–6pm</p>
+        <div class="social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
         </div>
-    </section>
+      </div>
+    </div>
+    <div class="copyright">&copy; 2026 Campus Pulse. Made for students.</div>
+  </div>
+</footer>
 
-    <!-- Marketplace Section -->
-    <section class="section" id="marketplace">
-        <div class="container">
-            <h2><i class="fas fa-shopping-cart"></i> Second-Hand Marketplace</h2>
-            <div class="marketplace-grid">
-                <div class="market-item" onclick="showDetails('market', 0)">
-                    <div class="market-image">💻</div>
-                    <div class="market-content">
-                        <div class="market-title">MacBook Air M2</div>
-                        <div class="market-price">₹85,000</div>
-                        <div style="font-size: 0.9rem; color: #666;">8GB RAM, 256GB SSD, 1 year Apple warranty</div>
-                    </div>
-                </div>
-                <div class="market-item" onclick="showDetails('market', 1)">
-                    <div class="market-image">📚</div>
-                    <div class="market-content">
-                        <div class="market-title">JEE Main Books Set</div>
-                        <div class="market-price">₹2,500</div>
-                        <div style="font-size: 0.9rem; color: #666;">Complete set: HC Verma, Cengage, Arihant</div>
-                    </div>
-                </div>
-                <div class="market-item" onclick="showDetails('market', 2)">
-                    <div class="market-image">📱</div>
-                    <div class="market-content">
-                        <div class="market-title">iPhone 15 Pro</div>
-                        <div class="market-price">₹1,15,000</div>
-                        <div style="font-size: 0.9rem; color: #666;">128GB, Titanium, excellent condition</div>
-                    </div>
-                </div>
-                <div class="market-item" onclick="showDetails('market', 3)">
-                    <div class="market-image">🪑</div>
-                    <div class="market-content">
-                        <div class="market-title">Gaming Chair</div>
-                        <div class="market-price">₹8,500</div>
-                        <div style="font-size: 0.9rem; color: #666;">RGB lighting, lumbar support, like new</div>
-                    </div>
-                </div>
-                <div class="market-item" onclick="showDetails('market', 4)">
-                    <div class="market-image">🎧</div>
-                    <div class="market-content">
-                        <div class="market-title">Sony WH-1000XM5</div>
-                        <div class="market-price">₹18,000</div>
-                        <div style="font-size: 0.9rem; color: #666;">Noise cancelling, 30hr battery, mint condition</div>
-                    </div>
-                </div>
-                <div class="market-item" onclick="showDetails('market', 5)">
-                    <div class="market-image">📖</div>
-                    <div class="market-content">
-                        <div class="market-title">Medical Books Collection</div>
-                        <div class="market-price">₹5,000</div>
-                        <div style="font-size: 0.9rem; color: #666;">Anatomy, Physiology, Pharmacology books</div>
-                    </div>
-                </div>
-                <div class="market-item" onclick="showDetails('market', 6)">
-                    <div class="market-image">🖥️</div>
-                    <div class="market-content">
-                        <div class="market-title">27" Gaming Monitor</div>
-                        <div class="market-price">₹15,000</div>
-                        <div style="font-size: 0.9rem; color: #666;">144Hz, 1080p, perfect for gaming/studying</div>
-                    </div>
-                </div>
-                <div class="market-item" onclick="showDetails('market', 7)">
-                    <div class="market-image">🎒</div>
-                    <div class="market-content">
-                        <div class="market-title">College Backpack</div>
-                        <div class="market-price">₹1,200</div>
-                        <div style="font-size: 0.9rem; color: #666;">Waterproof, multiple compartments, barely used</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle"></h3>
+    <p id="modalBody"></p>
+    <button class="modal-close" id="modalClose">Close</button>
+  </div>
+</div>
 
-    <!-- Study Resources Section -->
-    <section class="section" id="study">
-        <div class="container">
-            <h2><i class="fas fa-book"></i> Study Resources</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="showDetails('study', 0)">
-                    <div class="card-image">💻</div>
-                    <div class="card-content">
-                        <div class="card-title">Complete DSA Course</div>
-                        <div class="card-description">450+ problems with video solutions. Arrays, Linked Lists, Trees, Graphs, DP. LeetCode style questions.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐⭐ (4.9)</span>
-                            <span>₹1,999</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('study', 1)">
-                    <div class="card-image">📊</div>
-                    <div class="card-content">
-                        <div class="card-title">GATE 2026 Previous Papers</div>
-                        <div class="card-description">Last 10 years papers with detailed solutions. CS/IT, Mechanical, Electrical, Civil branches.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐⭐ (4.8)</span>
-                            <span>₹799</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('study', 2)">
-                    <div class="card-image">🎯</div>
-                    <div class="card-content">
-                        <div class="card-title">CAT Mock Tests 2026</div>
-                        <div class="card-description">50 full-length mocks with AI analysis. Sectional tests, topic-wise practice. Detailed explanations.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐⭐ (4.7)</span>
-                            <span>₹2,499</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('study', 3)">
-                    <div class="card-image">📝</div>
-                    <div class="card-content">
-                        <div class="card-title">NEET UG Cheat Sheets</div>
-                        <div class="card-description">High-yield points for Physics, Chemistry, Biology. Mnemonics, diagrams, last-minute revision.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐☆ (4.5)</span>
-                            <span>₹1,299</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('study', 4)">
-                    <div class="card-image">📚</div>
-                    <div class="card-content">
-                        <div class="card-title">MBA Entrance Notes</div>
-                        <div class="card-description">Complete study material for CAT, XAT, SNAP. Quant, LR, VARC, GK. Updated for 2026 pattern.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐☆ (4.6)</span>
-                            <span>₹3,499</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" onclick="showDetails('study', 5)">
-                    <div class="card-image">🔬</div>
-                    <div class="card-content">
-                        <div class="card-title">JEE Advanced Solutions</div>
-                        <div class="card-description">Step-by-step solutions for 2020-2025 papers. Alternative approaches, common mistakes explained.</div>
-                        <div class="card-meta">
-                            <span>⭐⭐⭐⭐⭐ (4.8)</span>
-                            <span>₹1,499</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<script>
+const data = {
+  food: [
+    {emoji:"🍛",name:"Anand Bhavan",desc:"Authentic South Indian meals, famous for dosa and idli.",rating:"4.3",price:"₹60–120",detail:"Authentic South Indian cuisine since 1985. Student combo: ₹85 (dosa + chutney + sambar). Open 6am–11pm daily, near IIT Delhi gate."},
+    {emoji:"🍕",name:"Domino's Pizza",desc:"International chain with a 20% student discount.",rating:"4.6",price:"₹150–400",detail:"Free delivery on orders above ₹300. Free garlic bread above ₹400. Delivery within 30 minutes, plenty of vegetarian options."},
+    {emoji:"🍜",name:"Wok Express",desc:"Pan-Asian food, quick meals for study breaks.",rating:"4.4",price:"₹80–180",detail:"Popular dishes: Pad Thai, Manchurian, noodles. 25% student discount on weekdays. Located in Connaught Place."},
+    {emoji:"🥪",name:"Subway",desc:"Custom sandwiches and salads, fresh ingredients.",rating:"4.2",price:"₹120–250",detail:"Build-your-own sandwiches with fresh veggies. Student meal: ₹149 for a 6-inch sub plus drink."},
+    {emoji:"☕",name:"Cafe Coffee Day",desc:"Study-friendly seating with free WiFi.",rating:"4.1",price:"₹100–200",detail:"Wide range of coffees, sandwiches and desserts. Group study tables available, open 24/7 in major locations."},
+    {emoji:"🍚",name:"Biryani House",desc:"Authentic Hyderabadi biryani, 15+ varieties.",rating:"4.7",price:"₹90–160",detail:"Weekend special: family pack ₹450. Fresh meat, aromatic spices, home delivery available."}
+  ],
+  stay: [
+    {emoji:"🏠",name:"Oyo Premium PG",desc:"AC rooms with gym and study areas, near IIT Delhi.",rating:"4.8",price:"₹8,500/mo",detail:"Fully furnished AC rooms with attached bathrooms. Gym, study room, 24/7 WiFi, housekeeping. Metro station 5 minutes away."},
+    {emoji:"🏢",name:"Zolo Stay Nehru Place",desc:"Furnished apartments with kitchen, metro nearby.",rating:"4.5",price:"₹12,000/mo",detail:"Modern coliving spaces for young professionals. Fully equipped kitchen, workspaces, all utilities included."},
+    {emoji:"🏘️",name:"Student Nest PG",desc:"Budget PG with mess and WiFi, near DU colleges.",rating:"3.9",price:"₹6,500/mo",detail:"North Indian mess included. Study tables in rooms. 24/7 hot water and a security guard on duty."},
+    {emoji:"🏨",name:"Hostel YWCA",desc:"Girls hostel, strict discipline, near CP.",rating:"4.3",price:"₹7,200/mo",detail:"Clean facilities, nutritious mess, study rooms. Cultural activities and an on-site medical facility."},
+    {emoji:"🏠",name:"CoLiving Spaces",desc:"Modern coliving near tech parks, for interns.",rating:"4.6",price:"₹15,000/mo",detail:"High-speed internet, co-working spaces, gym. Community events and networking opportunities."},
+    {emoji:"🏢",name:"Budget PG Karol Bagh",desc:"Affordable shared stay near markets.",rating:"3.7",price:"₹5,800/mo",detail:"Basic amenities, common kitchen, laundry facility. Near Karol Bagh metro, suited to budget-conscious students."}
+  ],
+  jobs: [
+    {title:"Frontend Developer Intern",company:"Microsoft",time:"2 hours ago",pay:"₹45,000/mo",tags:"Hybrid · 6 months",desc:"Build interfaces for Microsoft Teams with React and TypeScript.",detail:"Collaborate with senior developers on real production features. Requires HTML, CSS, JavaScript and React basics. Hyderabad office with hybrid option, PPO potential."},
+    {title:"Data Science Intern",company:"Google",time:"4 hours ago",pay:"₹50,000/mo",tags:"Remote · 6 months",desc:"Analyse user behaviour data and build recommendation models.",detail:"Work with Python, TensorFlow and BigQuery on recommendation algorithms. Remote with mentorship, certificate on completion."},
+    {title:"Product Management Intern",company:"Flipkart",time:"6 hours ago",pay:"₹35,000/mo",tags:"On-site · Bangalore",desc:"Assist in product strategy and user research.",detail:"Work with cross-functional teams on e-commerce features. MBA or engineering background preferred, basic SQL a plus."},
+    {title:"UI/UX Design Intern",company:"Adobe",time:"8 hours ago",pay:"₹40,000/mo",tags:"Hybrid · Portfolio required",desc:"Design interfaces for Creative Cloud apps in Figma.",detail:"User research and prototyping for Creative Cloud applications. A design portfolio is required to apply."},
+    {title:"DevOps Engineer Intern",company:"Amazon",time:"12 hours ago",pay:"₹42,000/mo",tags:"Remote",desc:"Automate deployment with AWS and CI/CD pipelines.",detail:"Work with AWS, Docker and Kubernetes for deployment automation. Basic Linux and scripting knowledge required."},
+    {title:"Marketing Intern",company:"Ola",time:"1 day ago",pay:"₹25,000/mo",tags:"On-site · Gurgaon",desc:"Run social campaigns for a fast-paced startup team.",detail:"Social media content creation and digital campaigns focused on user acquisition. Strong writing and communication skills essential."}
+  ],
+  market: [
+    {emoji:"💻",name:"MacBook Air M2",price:"₹85,000",desc:"8GB RAM, 256GB SSD, 1yr Apple warranty",detail:"Excellent condition, no scratches. Comes with original charger and box. Perfect for coding and design work."},
+    {emoji:"📚",name:"JEE Main Books Set",price:"₹2,500",desc:"HC Verma, Cengage, Arihant — complete set",detail:"All books in excellent condition with minimal highlighting. Original price ₹5,000."},
+    {emoji:"📱",name:"iPhone 15 Pro",price:"₹1,15,000",desc:"128GB, Titanium, excellent condition",detail:"Bought 2 months ago, all accessories included. Battery health 98%."},
+    {emoji:"🪑",name:"Gaming Chair",price:"₹8,500",desc:"RGB lighting, lumbar support, like new",detail:"Secretlab Titan Evo, used 6 months. Premium leather, adjustable lumbar support."},
+    {emoji:"🎧",name:"Sony WH-1000XM5",price:"₹18,000",desc:"Noise cancelling, 30hr battery, mint",detail:"Bought 3 months ago. Comes with case and extra ear tips."},
+    {emoji:"📖",name:"Medical Books Collection",price:"₹5,000",desc:"Anatomy, Physiology, Pharmacology",detail:"Gray's Anatomy, Guyton Physiology, Harper's Biochemistry, Robbins Pathology — all in good condition."},
+    {emoji:"🖥️",name:'27" Gaming Monitor',price:"₹15,000",desc:"144Hz, 1080p, HDMI cable included",detail:"Acer Nitro VG270UP, 1ms response time, 6 months old, excellent condition."},
+    {emoji:"🎒",name:"College Backpack",price:"₹1,200",desc:"Waterproof, multiple compartments",detail:"American Tourister, barely used for one semester. Includes rain cover."}
+  ],
+  study: [
+    {emoji:"💻",name:"Complete DSA Course",desc:"450+ problems with video solutions.",rating:"4.9",price:"₹1,999",detail:"Covers arrays, linked lists, trees, graphs, DP and greedy algorithms. LeetCode-style questions, lifetime access."},
+    {emoji:"📊",name:"GATE 2026 Previous Papers",desc:"10 years of papers with full solutions.",rating:"4.8",price:"₹799",detail:"Covers CS/IT, Mechanical, Electrical and Civil branches. Topic-wise analysis and difficulty levels."},
+    {emoji:"🎯",name:"CAT Mock Tests 2026",desc:"50 full-length mocks with AI analysis.",rating:"4.7",price:"₹2,499",detail:"Sectional tests for Quant, DILR, VARC with shortcut-method solutions. Updated for the 2026 pattern."},
+    {emoji:"📝",name:"NEET UG Cheat Sheets",desc:"High-yield revision notes, all subjects.",rating:"4.5",price:"₹1,299",detail:"Mnemonics, flowcharts and diagrams for last-minute revision, based on NCERT content."},
+    {emoji:"📚",name:"MBA Entrance Notes",desc:"Complete material for CAT, XAT, SNAP.",rating:"4.6",price:"₹3,499",detail:"Covers Quant, Logical Reasoning, Verbal Ability and GK, updated for the 2026 pattern."},
+    {emoji:"🔬",name:"JEE Advanced Solutions",desc:"Step-by-step solutions, 2020–2025 papers.",rating:"4.8",price:"₹1,499",detail:"Multiple solution approaches with common mistakes and time-saving tips, prepared by IIT faculty."}
+  ]
+};
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About Campus Pulse</h3>
-                    <p>Your go-to platform for all student needs in the city. From food to jobs, we've got you covered!</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <p><a href="#food">Food Spots</a></p>
-                    <p><a href="#accommodation">Accommodation</a></p>
-                    <p><a href="#jobs">Internships</a></p>
-                    <p><a href="#marketplace">Marketplace</a></p>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <p><a href="mailto:info@campuspulse.com">info@campuspulse.com</a></p>
-                    <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
-                    <p>Mon-Fri: 9AM-6PM</p>
-                </div>
-            </div>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2026 Campus Pulse. All rights reserved. Made with ❤️ for students.</p>
-            </div>
-        </div>
-    </footer>
+function card(item){
+  const ratingRow = item.rating ? `<span class="card-rating">★ ${item.rating}</span>` : '';
+  return `<div class="card" data-detail="${encodeURIComponent(item.detail)}" data-name="${item.name}">
+    <div class="card-top"><span class="card-emoji">${item.emoji}</span>${ratingRow}</div>
+    <div class="card-title">${item.name}</div>
+    <div class="card-desc">${item.desc}</div>
+    <div class="card-foot"><span class="price">${item.price}</span></div>
+  </div>`;
+}
 
-    <script>
-        // Toggle mobile menu
-        function toggleMenu() {
-            const nav = document.getElementById('nav-menu');
-            nav.classList.toggle('active');
-        }
+document.getElementById('food-grid').innerHTML = data.food.map(card).join('');
+document.getElementById('stay-grid').innerHTML = data.stay.map(card).join('');
+document.getElementById('market-grid').innerHTML = data.market.map(card).join('');
+document.getElementById('study-grid').innerHTML = data.study.map(card).join('');
+document.getElementById('job-list').innerHTML = data.jobs.map(j=>`
+  <div class="job-item" data-detail="${encodeURIComponent(j.detail)}" data-name="${j.title} — ${j.company}">
+    <div class="job-time">${j.time}</div>
+    <div class="job-main">
+      <div class="job-title">${j.title} · ${j.company}</div>
+      <div class="job-tags">${j.tags}</div>
+      <div class="job-desc">${j.desc}</div>
+    </div>
+    <div class="job-pay">${j.pay}</div>
+  </div>
+`).join('');
 
-        // Show details function
-        function showDetails(type, index) {
-            const details = {
-                food: [
-                    { name: "Anand Bhavan", details: "Authentic South Indian cuisine since 1985. Famous for crispy dosas and soft idlis. Student combo: ₹85 (dosa + chutney + sambar). Open 6AM-11PM daily. Located near IIT Delhi gate." },
-                    { name: "Domino's Pizza", details: "International pizza chain with fresh ingredients. Student discount: 20% off with college ID. Free garlic bread on orders above ₹400. Delivery within 30 minutes. Multiple vegetarian options available." },
-                    { name: "Wok Express", details: "Pan-Asian cuisine with authentic flavors. Popular dishes: Pad Thai, Manchurian, Noodles. 25% student discount on weekdays. Quick service, perfect for lunch breaks. Located in Connaught Place." },
-                    { name: "Subway", details: "Build-your-own sandwiches with fresh veggies. Low-calorie options available. Student meal: ₹149 (6-inch sub + drink). Customizable portions. Clean, hygienic environment." },
-                    { name: "CCD (Cafe Coffee Day)", details: "Perfect study spot with free WiFi. Wide range of coffees, sandwiches, and desserts. Student discount on all beverages. Group study tables available. Open 24/7 in major locations." },
-                    { name: "Biryani House", details: "Authentic Hyderabadi biryani with 15+ varieties. Weekend special: Family pack ₹450. Fresh meat, aromatic spices. Home delivery available. Rated best biryani in Delhi-NCR." }
-                ],
-                accommodation: [
-                    { name: "Oyo Premium PG", details: "Fully furnished AC rooms with attached bathrooms. Amenities: Gym, study room, 24/7 WiFi, housekeeping. Walking distance to IIT Delhi. Metro station 5 min away. Security cameras, power backup." },
-                    { name: "Zolo Stay Nehru Place", details: "Modern coliving spaces for young professionals. Fully equipped kitchen, workspaces, entertainment area. Near Nehru Place metro. All utilities included. Perfect for interns and working students." },
-                    { name: "Student Nest PG", details: "Budget-friendly accommodation for students. North Indian mess included. WiFi, laundry service. Near DU colleges. Study tables in rooms. 24/7 hot water, security guard on duty." },
-                    { name: "Hostel YWCA", details: "Reputed girls hostel with strict discipline. Clean facilities, nutritious mess, study rooms. Near Connaught Place. Cultural activities, medical facility. Suitable for serious students." },
-                    { name: "CoLiving Spaces", details: "Premium coliving with modern amenities. High-speed internet, co-working spaces, gym. Near major tech parks. Community events, networking opportunities. Perfect for career-focused students." },
-                    { name: "Budget PG Karol Bagh", details: "Affordable shared accommodation. Basic amenities, common kitchen. Near Karol Bagh metro and markets. Laundry facility available. Suitable for budget-conscious students preparing for exams." }
-                ],
-                job: [
-                    { name: "Frontend Developer Intern - Microsoft", details: "Work on Microsoft Teams web interface using React and TypeScript. Collaborate with senior developers on real projects. Requirements: HTML, CSS, JavaScript, React basics. 6-month internship with potential PPO. Location: Hyderabad office with hybrid option." },
-                    { name: "Data Science Intern - Google", details: "Analyze user behavior data using Python, TensorFlow, and BigQuery. Work on recommendation algorithms. Requirements: Python, statistics, ML basics. Remote work with mentorship. 6-month program with certificate." },
-                    { name: "Product Management Intern - Flipkart", details: "Assist product managers in user research and feature planning. Work on e-commerce platform improvements. Requirements: Analytical skills, basic SQL. MBA or engineering preferred. On-site in Bangalore office." },
-                    { name: "UI/UX Design Intern - Adobe", details: "Design interfaces for Creative Cloud applications using Figma and Adobe XD. User research and prototyping. Requirements: Figma skills, design portfolio. Hybrid work model. Creative and innovative environment." },
-                    { name: "DevOps Engineer Intern - Amazon", details: "Work with AWS services, Docker, Kubernetes for deployment automation. CI/CD pipeline management. Requirements: Linux, basic scripting. Remote work available. Learn industry-standard DevOps practices." },
-                    { name: "Marketing Intern - Ola", details: "Social media content creation and digital marketing campaigns. Work on user acquisition strategies. Requirements: Social media skills, content writing. On-site in Gurgaon office. Fast-paced startup environment." }
-                ],
-                market: [
-                    { name: "MacBook Air M2", details: "Apple MacBook Air with M2 chip, 8GB RAM, 256GB SSD. Excellent condition, no scratches. Comes with original charger and box. 1 year Apple warranty remaining. Perfect for coding and design work." },
-                    { name: "JEE Main Books Set", details: "Complete preparation set: HC Verma Physics (2 volumes), Cengage Mathematics, Arihant Chemistry. All books in excellent condition, minimal highlighting. Original price ₹5,000, selling for ₹2,500." },
-                    { name: "iPhone 15 Pro", details: "Latest iPhone 15 Pro 128GB in Natural Titanium. Perfect condition, bought 2 months ago. All accessories included. Face ID working perfectly. Battery health 98%." },
-                    { name: "Gaming Chair", details: "Secretlab Titan Evo gaming chair with RGB lighting. Adjustable lumbar support, premium leather. Used for 6 months, like new condition. Perfect for long study or gaming sessions." },
-                    { name: "Sony WH-1000XM5", details: "Premium noise-cancelling headphones. 30-hour battery life, quick charge. Crystal clear calls, immersive sound. Mint condition, bought 3 months ago. Comes with case and extra ear tips." },
-                    { name: "Medical Books Collection", details: "Essential MBBS books: Gray's Anatomy, Guyton Physiology, Harper's Biochemistry, Robbins Pathology. All volumes in good condition. Perfect for 2nd/3rd year medical students." },
-                    { name: "27\" Gaming Monitor", details: "Acer Nitro VG270UP 144Hz IPS monitor. 1080p resolution, 1ms response time. Perfect for gaming and productivity. 6-month old, excellent condition. Includes HDMI cable." },
-                    { name: "College Backpack", details: "American Tourister waterproof backpack. Multiple compartments, laptop sleeve. Used for 1 semester, barely any wear. Perfect for daily college commute. Rain cover included." }
-                ],
-                study: [
-                    { name: "Complete DSA Course", details: "450+ coding problems with video solutions. Topics: Arrays, Linked Lists, Stacks, Queues, Trees, Graphs, Dynamic Programming, Greedy Algorithms. LeetCode-style questions with time/space complexity analysis. Lifetime access, certificate included." },
-                    { name: "GATE 2026 Previous Papers", details: "Complete solutions for GATE papers 2016-2025. All branches: CS/IT, Mechanical, Electrical, Civil, Chemical. Detailed explanations with alternative approaches. Topic-wise analysis and difficulty levels. Updated for new syllabus." },
-                    { name: "CAT Mock Tests 2026", details: "50 full-length mock tests with AI-powered analysis. Sectional tests for Quant, DILR, VARC. Detailed solutions with shortcut methods. Performance tracking dashboard. Updated for new CAT 2026 pattern." },
-                    { name: "NEET UG Cheat Sheets", details: "High-yield revision notes for all subjects. Mnemonics, flowcharts, diagrams. Last-minute revision points. NCERT-based content. Includes solved MCQs and important formulas. Perfect for quick revision." },
-                    { name: "MBA Entrance Notes", details: "Complete study material for CAT, XAT, SNAP, IIFT. Quantitative Aptitude, Logical Reasoning, Verbal Ability, General Knowledge. Practice questions with solutions. Updated for 2026 exam patterns." },
-                    { name: "JEE Advanced Solutions", details: "Step-by-step solutions for 2020-2025 JEE Advanced papers. Multiple solution approaches. Common mistakes and time-saving tips. Topic-wise difficulty analysis. Prepared by IIT faculty." }
-                ]
-            };
+/* modal */
+const overlay = document.getElementById('modalOverlay');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+document.querySelectorAll('[data-detail]').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    modalTitle.textContent = el.getAttribute('data-name');
+    modalBody.textContent = decodeURIComponent(el.getAttribute('data-detail'));
+    overlay.classList.add('open');
+  });
+});
+document.getElementById('modalClose').addEventListener('click', ()=>overlay.classList.remove('open'));
+overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.classList.remove('open'); });
 
-            const item = details[type][index];
-            alert(`${item.name}\n\n${item.details}`);
-        }
+/* mobile menu */
+document.getElementById('menuToggle').addEventListener('click', ()=>{
+  document.getElementById('nav-menu').classList.toggle('active-menu');
+});
 
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
-    </script>
+/* router */
+const routes = ['home','food','stay','jobs','marketplace','study'];
+function router(){
+  let route = (location.hash || '#home').slice(1);
+  if(!routes.includes(route)) route = 'home';
+  routes.forEach(r=>{
+    document.getElementById('page-'+r).classList.toggle('active', r===route);
+  });
+  document.querySelectorAll('[data-link]').forEach(el=>{
+    if(el.tagName==='A') el.classList.toggle('active', el.getAttribute('data-link')===route);
+  });
+  document.getElementById('nav-menu').classList.remove('active-menu');
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', router);
+document.querySelector('.logo').addEventListener('click', ()=>{ location.hash = '#home'; });
+router();
+</script>
 </body>
 </html>
